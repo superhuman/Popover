@@ -48,6 +48,7 @@ open class Popover: UIView {
   open var highlightFromView: Bool = false
   open var highlightViewBounds: CGRect? = nil
   open var highlightCornerRadius: CGFloat = 0
+  open var highlightLayerExcludedCorners: [UIRectCorner] = []
   open var springDamping: CGFloat = 0.7
   open var initialSpringVelocity: CGFloat = 3
 
@@ -450,6 +451,10 @@ private extension Popover {
       }
 
       highlightRect = clippedHighlightRect
+    }
+
+    for corner in highlightLayerExcludedCorners {
+        cornerRadii.remove(corner)
     }
 
     let highlightPath = UIBezierPath(roundedRect: highlightRect, byRoundingCorners: cornerRadii, cornerRadii: CGSize(width: self.highlightCornerRadius, height: self.highlightCornerRadius))
